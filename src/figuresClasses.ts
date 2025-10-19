@@ -16,19 +16,13 @@ export class Triangle implements Figure {
     public z: number,
   ) {
     if (x <= 0 || y <= 0 || z <= 0) {
-      throw new Error('Side ought to be positive value');
+      throw new Error(
+        `Triangle sides must be > 0; received a=${x}, b=${y}, c=${z}`,
+      );
     }
 
-    if (x + y <= z) {
-      throw new Error('z coordinate is too big');
-    }
-
-    if (z + y <= x) {
-      throw new Error('x is too big');
-    }
-
-    if (x + z <= y) {
-      throw new Error('y is too big');
+    if (z + y <= x || x + y <= z || x + z <= y) {
+      throw new Error(`Sides ${x}, ${y} and ${z} can't form a triangle`);
     }
   }
 
@@ -48,7 +42,7 @@ export class Circle implements Figure {
     public radius: number,
   ) {
     if (radius <= 0) {
-      throw new Error('Invalid input data');
+      throw new Error(`Circle radius must be > 0; received ${radius}`);
     }
   }
 
@@ -62,16 +56,18 @@ export class Rectangle implements Figure {
 
   constructor(
     public color: Colors,
-    public x: number,
-    public y: number,
+    public height: number,
+    public width: number,
   ) {
-    if (x <= 0 || y <= 0) {
-      throw new Error('Invalid input data');
+    if (height <= 0 || width <= 0) {
+      throw new Error(
+        `Rectangle width and height, must be > 0, received next values: width=${this.width} and height=${this.height}`,
+      );
     }
   }
 
   getArea(): number {
-    return Math.floor(this.x * this.y * 100) / 100;
+    return Math.floor(this.height * this.width * 100) / 100;
   }
 }
 
